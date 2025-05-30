@@ -34310,16 +34310,7 @@ View.propTypes = {
 };
 const ReaderUI = /*#__PURE__*/external_React_default().forwardRef((props, ref) => {
   let [state, setState] = (0,external_React_.useState)(props.state);
-  let [authorName, setAuthorName] = (0,external_React_.useState)(() => {
-    let name = window.localStorage.getItem('annotationAuthorName');
-    if (!name) {
-      name = window.prompt('Enter your name for annotations:', '');
-      if (name) {
-        window.localStorage.setItem('annotationAuthorName', name);
-      }
-    }
-    return name || '';
-  });
+  let [authorName, setAuthorName] = (0,external_React_.useState)('');
   let annotationsViewRef = (0,external_React_.useRef)();
   (0,external_React_.useImperativeHandle)(ref, () => ({
     setState,
@@ -34330,14 +34321,6 @@ const ReaderUI = /*#__PURE__*/external_React_default().forwardRef((props, ref) =
   let viewStats = state.primary ? state.primaryViewStats : state.secondaryViewStats;
   let stackedView = state.bottomPlaceholderHeight !== null;
   let showContextPaneToggle = state.showContextPaneToggle && (stackedView || !state.contextPaneOpen);
-  function handleChangeAuthorName() {
-    const newName = window.prompt('Enter your name for annotations:', authorName);
-    if (newName !== null) {
-      setAuthorName(newName);
-      window.localStorage.setItem('annotationAuthorName', newName);
-      props.onChangeAuthorName && props.onChangeAuthorName(newName);
-    }
-  }
   return /*#__PURE__*/external_React_default().createElement(external_React_.Fragment, null, /*#__PURE__*/external_React_default().createElement("div", null, /*#__PURE__*/external_React_default().createElement(toolbar, {
     type: props.type,
     pageIndex: viewStats.pageIndex || 0,
@@ -34373,10 +34356,7 @@ const ReaderUI = /*#__PURE__*/external_React_default().forwardRef((props, ref) =
     onToggleAppearancePopup: props.onToggleAppearancePopup,
     onToggleFind: props.onToggleFind,
     onToggleContextPane: props.onToggleContextPane
-  }, /*#__PURE__*/external_React_default().createElement("button", {
-    onClick: handleChangeAuthorName,
-    title: "Change annotation author name"
-  }, "Change Annotation Name")), /*#__PURE__*/external_React_default().createElement("div", null, state.sidebarOpen === true && /*#__PURE__*/external_React_default().createElement(sidebar_sidebar, {
+  }), /*#__PURE__*/external_React_default().createElement("div", null, state.sidebarOpen === true && /*#__PURE__*/external_React_default().createElement(sidebar_sidebar, {
     type: props.type,
     view: state.sidebarView,
     filter: state.filter,
@@ -34525,8 +34505,7 @@ ReaderUI.propTypes = {
   onAddTheme: (external_PropTypes_default()).func,
   onOpenThemeContextMenu: (external_PropTypes_default()).func,
   onSaveCustomThemes: (external_PropTypes_default()).func,
-  onCloseThemePopup: (external_PropTypes_default()).func,
-  onChangeAuthorName: (external_PropTypes_default()).func
+  onCloseThemePopup: (external_PropTypes_default()).func
   // Add other props as needed
 };
 /* harmony default export */ const reader_ui = (ReaderUI);
